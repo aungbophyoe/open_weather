@@ -4,7 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.aungbophyoe.space.openweather.viewmodels.HomeViewModel"/>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.aungbophyoe.space.openweather.viewmodels.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,7 +70,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:background="?attr/selectableItemBackground"
-                        android:padding="7dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_search"
                         app:tint="@color/tint_white_gray" />
 

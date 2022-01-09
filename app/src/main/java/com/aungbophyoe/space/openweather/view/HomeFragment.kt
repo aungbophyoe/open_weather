@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.aungbophyoe.space.openweather.R
 import com.aungbophyoe.space.openweather.databinding.FragmentHomeBinding
+import com.aungbophyoe.space.openweather.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +21,8 @@ class HomeFragment : Fragment() {
     private val navController : NavController by lazy {
         findNavController()
     }
+
+    private val homeViewModel : HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +42,16 @@ class HomeFragment : Fragment() {
             ivSearch.setOnClickListener {
                 navController.navigate(R.id.viewSearch)
             }
+            lifecycleOwner = this@HomeFragment
+            viewModel = homeViewModel
         }
+
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
     companion object {
