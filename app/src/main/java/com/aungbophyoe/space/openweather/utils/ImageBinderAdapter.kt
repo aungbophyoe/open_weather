@@ -8,11 +8,11 @@ import com.aungbophyoe.space.openweather.R
 object ImageBinderAdapter {
     fun setImageUrl(imageView: ImageView, url: String) {
         if (url == null) {
-            imageView.load(R.mipmap.ic_launcher)
+            imageView.load(R.drawable.ic_cloud)
         } else {
             imageView.load(url){
                 crossfade(true)
-                placeholder(R.mipmap.ic_launcher)
+                placeholder(R.drawable.ic_cloud)
                 transformations(CircleCropTransformation())
             }
         }

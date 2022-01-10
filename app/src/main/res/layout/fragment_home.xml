@@ -100,9 +100,10 @@
                 />
         </RelativeLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fillViewport="true"
             android:visibility="@{viewModel.currentWeather!=null ? View.VISIBLE : View.GONE,default=gone}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,221 +111,228 @@
             app:layout_constraintTop_toBottomOf="@id/app_bar"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCityName"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                tools:text="Yangon"
-                app:timeZoneName="@{viewModel.currentWeather}"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_normal"
-                android:textColor="@color/txt_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvTodayDate"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                tools:text="2/2/2222"
-                app:todayDate="@{viewModel.currentWeather}"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_normal"
-                android:textColor="@color/txt_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvCityName" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/ivCurrentWeatherImage"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_cloud"
-                app:image="@{viewModel.currentWeather}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTodayDate" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCurrentWeatherStatus"
-                android:layout_margin="5dp"
-                tools:text="31'"
-                app:currentWeatherStatus="@{viewModel.currentWeather}"
-                android:textColor="@color/txt_title"
-                android:textStyle="bold"
-                android:textSize="50sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivCurrentWeatherImage" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Detail Information"
-                android:id="@+id/tvDetailTitle"
-                android:layout_marginLeft="20sp"
-                android:textSize="@dimen/txt_normal"
-                android:textColor="@color/txt_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvCurrentWeatherStatus" />
-
-            <View
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_margin="5dp"
-                android:id="@+id/viewBar"
-                android:background="@color/blackTransparent"
-                app:layout_constraintTop_toBottomOf="@id/tvDetailTitle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/guideline"
-                app:layout_constraintGuide_percent="0.5"
-                android:orientation="vertical" />
+                >
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWWindTitle"
-                android:text="Wind -"
-                android:maxLines="1"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewBar"
-                app:layout_constraintEnd_toStartOf="@id/tvCWWindStatus"
-                android:textColor="@color/txt_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCityName"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    tools:text="Yangon"
+                    app:timeZoneName="@{viewModel.currentWeather}"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_normal"
+                    android:textColor="@color/txt_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWWindStatus"
-                android:layout_marginTop="10dp"
-                tools:text="0"
-                android:maxLines="1"
-                app:wind="@{viewModel.currentWeather}"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toEndOf="@id/tvCWWindTitle"
-                app:layout_constraintTop_toBottomOf="@id/viewBar"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvTodayDate"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    tools:text="2/2/2222"
+                    app:todayDate="@{viewModel.currentWeather}"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_normal"
+                    android:textColor="@color/txt_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCityName" />
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/ivCurrentWeatherImage"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_cloud"
+                    app:image="@{viewModel.currentWeather}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTodayDate" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWPressureTitle"
-                android:text="Pressure -"
-                android:maxLines="1"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvCWWindTitle"
-                app:layout_constraintEnd_toStartOf="@id/tvCWPressureStatus"
-                android:textColor="@color/txt_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCurrentWeatherStatus"
+                    android:layout_margin="5dp"
+                    tools:text="31'"
+                    app:currentWeatherStatus="@{viewModel.currentWeather}"
+                    android:textColor="@color/txt_title"
+                    android:textStyle="bold"
+                    android:textSize="50sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivCurrentWeatherImage" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWPressureStatus"
-                android:layout_marginTop="10dp"
-                tools:text="0"
-                android:maxLines="1"
-                app:pressure="@{viewModel.currentWeather}"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toEndOf="@id/tvCWPressureTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvCWWindStatus"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Detail Information"
+                    android:id="@+id/tvDetailTitle"
+                    android:layout_marginLeft="20sp"
+                    android:textSize="@dimen/txt_normal"
+                    android:textColor="@color/txt_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCurrentWeatherStatus" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/viewBar"
+                    android:background="@color/blackTransparent"
+                    app:layout_constraintTop_toBottomOf="@id/tvDetailTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWHumidityTitle"
-                android:text="Humidity -"
-                android:maxLines="1"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/viewBar"
-                app:layout_constraintEnd_toStartOf="@id/tvCWHumidityStatus"
-                android:textColor="@color/txt_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_small" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/guideline"
+                    app:layout_constraintGuide_percent="0.5"
+                    android:orientation="vertical" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWHumidityStatus"
-                android:layout_marginTop="10dp"
-                tools:text="0"
-                android:maxLines="1"
-                app:humidity="@{viewModel.currentWeather}"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toEndOf="@id/tvCWHumidityTitle"
-                app:layout_constraintTop_toBottomOf="@id/viewBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWWindTitle"
+                    android:text="Wind -"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewBar"
+                    app:layout_constraintEnd_toStartOf="@id/tvCWWindStatus"
+                    android:textColor="@color/txt_title"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_small" />
 
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWFeelTitle"
-                android:text="Feels Like -"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="20dp"
-                android:maxLines="1"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
-                app:layout_constraintEnd_toStartOf="@id/tvCWFeelStatus"
-                android:textColor="@color/txt_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/txt_small" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCWFeelStatus"
-                android:layout_marginTop="10dp"
-                tools:text="0"
-                android:maxLines="1"
-                app:feels_like="@{viewModel.currentWeather}"
-                android:paddingLeft="20dp"
-                android:textAlignment="textStart"
-                app:layout_constraintStart_toEndOf="@id/tvCWFeelTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_small" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWWindStatus"
+                    android:layout_marginTop="10dp"
+                    tools:text="0"
+                    android:maxLines="1"
+                    app:wind="@{viewModel.currentWeather}"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toEndOf="@id/tvCWWindTitle"
+                    app:layout_constraintTop_toBottomOf="@id/viewBar"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/txt_small" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWPressureTitle"
+                    android:text="Pressure -"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCWWindTitle"
+                    app:layout_constraintEnd_toStartOf="@id/tvCWPressureStatus"
+                    android:textColor="@color/txt_title"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWPressureStatus"
+                    android:layout_marginTop="10dp"
+                    tools:text="0"
+                    android:maxLines="1"
+                    app:pressure="@{viewModel.currentWeather}"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toEndOf="@id/tvCWPressureTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvCWWindStatus"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/txt_small" />
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWHumidityTitle"
+                    android:text="Humidity -"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/viewBar"
+                    app:layout_constraintEnd_toStartOf="@id/tvCWHumidityStatus"
+                    android:textColor="@color/txt_title"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWHumidityStatus"
+                    android:layout_marginTop="10dp"
+                    tools:text="0"
+                    android:maxLines="1"
+                    app:humidity="@{viewModel.currentWeather}"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toEndOf="@id/tvCWHumidityTitle"
+                    app:layout_constraintTop_toBottomOf="@id/viewBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/txt_small" />
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWFeelTitle"
+                    android:text="Feels Like -"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
+                    app:layout_constraintEnd_toStartOf="@id/tvCWFeelStatus"
+                    android:textColor="@color/txt_title"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txt_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCWFeelStatus"
+                    android:layout_marginTop="10dp"
+                    tools:text="0"
+                    android:maxLines="1"
+                    app:feels_like="@{viewModel.currentWeather}"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toEndOf="@id/tvCWFeelTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/txt_small" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
