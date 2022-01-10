@@ -15,8 +15,14 @@ data class CurrentWeatherNetworkEntity(
     var weather: List<Weather>,
     @SerializedName("main")
     @Expose
-    var detail: Detail
-) {
+    var detail: Detail,
+    @SerializedName("dt")
+    @Expose
+    var dateTime : Long,
+    @SerializedName("wind")
+    @Expose
+    var wind : Wind
+    ) {
     data class Weather(
         @SerializedName("main")
         @Expose
@@ -29,6 +35,12 @@ data class CurrentWeatherNetworkEntity(
         var icon:String
     )
 
+    data class Wind(
+        @SerializedName("speed")
+        @Expose
+        var speed : Double,
+    )
+
     data class Detail(
         @SerializedName("temp")
         @Expose
@@ -38,6 +50,15 @@ data class CurrentWeatherNetworkEntity(
         var tempMin : Double,
         @SerializedName("temp_max")
         @Expose
-        var tempMax : Double
+        var tempMax : Double,
+        @SerializedName("feels_like")
+        @Expose
+        var feelsLike : Double,
+        @SerializedName("pressure")
+        @Expose
+        var pressure : Int,
+        @SerializedName("humidity")
+        @Expose
+        var humidity : Int,
     )
 }

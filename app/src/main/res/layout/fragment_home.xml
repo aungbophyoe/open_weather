@@ -80,9 +80,30 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE,default=gone}"
+            android:background="@color/blackTransparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:indeterminate="true"
+                android:visibility="visible"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{viewModel.currentWeather!=null ? View.VISIBLE : View.GONE,default=gone}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +117,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 tools:text="Yangon"
+                app:timeZoneName="@{viewModel.currentWeather}"
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_normal"
                 android:textColor="@color/txt_title"
@@ -109,6 +131,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 tools:text="2/2/2222"
+                app:todayDate="@{viewModel.currentWeather}"
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_normal"
                 android:textColor="@color/txt_title"
@@ -121,7 +144,7 @@
                 android:id="@+id/ivCurrentWeatherImage"
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_cloud"
-                app:tint="@color/colorPrimary"
+                app:image="@{viewModel.currentWeather}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTodayDate" />
@@ -132,6 +155,7 @@
                 android:id="@+id/tvCurrentWeatherStatus"
                 android:layout_margin="5dp"
                 tools:text="31'"
+                app:currentWeatherStatus="@{viewModel.currentWeather}"
                 android:textColor="@color/txt_title"
                 android:textStyle="bold"
                 android:textSize="50sp"
@@ -146,7 +170,7 @@
                 android:text="Detail Information"
                 android:id="@+id/tvDetailTitle"
                 android:layout_marginLeft="20sp"
-                android:textSize="@dimen/txt_title"
+                android:textSize="@dimen/txt_normal"
                 android:textColor="@color/txt_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCurrentWeatherStatus" />
@@ -173,6 +197,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCWWindTitle"
                 android:text="Wind -"
+                android:maxLines="1"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
@@ -181,7 +206,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tvCWWindStatus"
                 android:textColor="@color/txt_title"
                 android:textStyle="bold"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
             <TextView
                 android:layout_width="0dp"
@@ -189,13 +214,15 @@
                 android:id="@+id/tvCWWindStatus"
                 android:layout_marginTop="10dp"
                 tools:text="0"
+                android:maxLines="1"
+                app:wind="@{viewModel.currentWeather}"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toEndOf="@id/tvCWWindTitle"
                 app:layout_constraintTop_toBottomOf="@id/viewBar"
                 app:layout_constraintEnd_toStartOf="@id/guideline"
                 android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
 
             <TextView
@@ -203,6 +230,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCWPressureTitle"
                 android:text="Pressure -"
+                android:maxLines="1"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
@@ -211,7 +239,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tvCWPressureStatus"
                 android:textColor="@color/txt_title"
                 android:textStyle="bold"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
             <TextView
                 android:layout_width="0dp"
@@ -219,13 +247,15 @@
                 android:id="@+id/tvCWPressureStatus"
                 android:layout_marginTop="10dp"
                 tools:text="0"
+                android:maxLines="1"
+                app:pressure="@{viewModel.currentWeather}"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toEndOf="@id/tvCWPressureTitle"
                 app:layout_constraintTop_toBottomOf="@id/tvCWWindStatus"
                 app:layout_constraintEnd_toStartOf="@id/guideline"
                 android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
 
             <TextView
@@ -233,6 +263,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCWHumidityTitle"
                 android:text="Humidity -"
+                android:maxLines="1"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
@@ -241,7 +272,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tvCWHumidityStatus"
                 android:textColor="@color/txt_title"
                 android:textStyle="bold"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
             <TextView
                 android:layout_width="0dp"
@@ -249,29 +280,32 @@
                 android:id="@+id/tvCWHumidityStatus"
                 android:layout_marginTop="10dp"
                 tools:text="0"
+                android:maxLines="1"
+                app:humidity="@{viewModel.currentWeather}"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toEndOf="@id/tvCWHumidityTitle"
                 app:layout_constraintTop_toBottomOf="@id/viewBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCWFeelTitle"
-                android:text="Humidity -"
+                android:text="Feels Like -"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
+                android:maxLines="1"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
                 app:layout_constraintEnd_toStartOf="@id/tvCWFeelStatus"
                 android:textColor="@color/txt_title"
                 android:textStyle="bold"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
             <TextView
                 android:layout_width="0dp"
@@ -279,13 +313,15 @@
                 android:id="@+id/tvCWFeelStatus"
                 android:layout_marginTop="10dp"
                 tools:text="0"
+                android:maxLines="1"
+                app:feels_like="@{viewModel.currentWeather}"
                 android:paddingLeft="20dp"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toEndOf="@id/tvCWFeelTitle"
                 app:layout_constraintTop_toBottomOf="@id/tvCWHumidityTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/txt_color"
-                android:textSize="@dimen/txt_normal" />
+                android:textSize="@dimen/txt_small" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

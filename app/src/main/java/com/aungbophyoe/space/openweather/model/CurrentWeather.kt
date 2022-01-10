@@ -6,5 +6,7 @@ data class CurrentWeather(
     var id : Int,
     var name : String,
     var weather: List<CurrentWeatherNetworkEntity.Weather>,
-    var detail: CurrentWeatherNetworkEntity.Detail
+    var detail: CurrentWeatherNetworkEntity.Detail,
+    var dateTime : Long,
+    var wind : CurrentWeatherNetworkEntity.Wind
 )
