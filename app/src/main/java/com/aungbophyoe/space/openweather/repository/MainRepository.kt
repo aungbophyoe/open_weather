@@ -11,18 +11,18 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiService: ApiService, private val networkMapper: NetworkMapper,private val currentWeatherNetworkMapper: CurrentWeatherNetworkMapper) {
-   /* suspend fun getCurrentWeather(searchCity:String) : Flow<DataState<OpenWeather>> = flow {
+    suspend fun getCurrentWeatherByCity(searchCity:String) : Flow<DataState<CurrentWeather>> = flow {
         emit(DataState.Loading)
         try {
             val response = apiService.getCurrentWeather(searchCity = searchCity,unit = "metric")
             if(response.isSuccessful){
                 val data = response.body()!!
-                emit(DataState.Success(networkMapper.mapFromEntity(data)))
+                emit(DataState.Success(currentWeatherNetworkMapper.mapFromEntity(data)))
             }
         }catch (e:Exception){
             emit(DataState.Error(e))
         }
-    }*/
+    }
 
     suspend fun getDailyWeatherLocation(lat:String, lon:String) : Flow<DataState<OpenWeather>> = flow {
         emit(DataState.Loading)

@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
     init {
         viewModelScope.launch {
             _loading.value = true
-            /*repository.getDailyWeatherLocation(lat = latitude.value ?: "16.8409",lon = longitude.value ?: "96.1735")
+            repository.getDailyWeatherLocation(lat = latitude.value ?: "16.8409",lon = longitude.value ?: "96.1735")
                 .onEach { dataState ->
                     when(dataState){
                         is DataState.Loading -> {
@@ -74,7 +74,7 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
                         }
                     }
                 }
-                .launchIn(viewModelScope)*/
+                .launchIn(viewModelScope)
 
             repository.getCurrentWeatherLocation(lat = latitude.value ?: "16.8409",lon = longitude.value ?: "96.1735")
                 .onEach { dataState ->

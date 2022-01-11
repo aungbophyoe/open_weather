@@ -15,7 +15,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.aungbophyoe.space.openweather.R
+import com.aungbophyoe.space.openweather.adapter.DailyWeatherRecyclerAdapter
 import com.aungbophyoe.space.openweather.databinding.FragmentHomeBinding
 import com.aungbophyoe.space.openweather.utils.Utility
 import com.aungbophyoe.space.openweather.viewmodels.HomeViewModel
@@ -40,6 +42,10 @@ class HomeFragment : Fragment() {
     private val homeViewModel : HomeViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private val dailyWeatherRecyclerAdapter by lazy {
+        DailyWeatherRecyclerAdapter(requireContext())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,11 +61,13 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
         val view = binding!!.root
         binding!!.apply {
+            rvDaily.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
             ivSearch.setOnClickListener {
                 navController.navigate(R.id.viewSearch)
             }
             lifecycleOwner = this@HomeFragment
             viewModel = homeViewModel
+            rvDaily.adapter = dailyWeatherRecyclerAdapter
             Dexter.withContext(activity)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(object : PermissionListener {
