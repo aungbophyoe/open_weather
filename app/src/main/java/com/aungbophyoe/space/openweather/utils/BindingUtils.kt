@@ -74,3 +74,8 @@ fun setItems(listView : RecyclerView, items: OpenWeather?){
     val list = items?.daily
     (listView.adapter as DailyWeatherRecyclerAdapter).submitList(list)
 }
+
+@BindingAdapter("noData")
+fun TextView.setNoData(msg: String?){
+    text = msg ?: "No Data."
+}

@@ -85,12 +85,16 @@ class HomeFragment : Fragment() {
                         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
                         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                             Log.d("locationA","${location?.latitude.toString()} : ${location?.longitude.toString()}")
+                            homeViewModel.setLocation(location?.latitude.toString(),location?.longitude.toString())
+                            homeViewModel.getWeather()
                         }
                         val locationManager = this@HomeFragment.activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         val location =locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                        homeViewModel.setLocation(location?.latitude.toString(),location?.longitude.toString())
-                        Log.d("location","${location?.latitude.toString()} : ${location?.longitude.toString()}")
-                        homeViewModel.getWeather()
+                        if(location!=null){
+                            homeViewModel.setLocation(location?.latitude.toString(),location?.longitude.toString())
+                            Log.d("location","${location?.latitude.toString()} : ${location?.longitude.toString()}")
+                            homeViewModel.getWeather()
+                        }
                     }
 
                     override fun onPermissionDenied(p0: PermissionDeniedResponse?) {

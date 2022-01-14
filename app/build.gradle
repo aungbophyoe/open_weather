@@ -6,6 +6,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 2
+
 def secretPropertiesFile = rootProject.file("secret.properties")
 def secretProperties = new Properties()
 if (secretPropertiesFile.exists()) {
@@ -20,7 +24,7 @@ android {
         minSdk 21
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
         buildConfigField("String", "BASE_URL", "\"${secretProperties['PRODUCTION_URL']}\"")
         buildConfigField("String", "AUTH_TOKEN", "\"${secretProperties['AUTH_TOKEN']}\"")
@@ -31,10 +35,30 @@ android {
         }
     }
 
+    signingConfigs {
+
+        debug {
+            storeFile file("../debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+
+        release {
+            storeFile file("../production.keystore")
+            storePassword "openWeather"
+            keyAlias "OpenWeather"
+            keyPassword "openWeather"
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -47,6 +71,17 @@ android {
     buildFeatures {
         dataBinding true
         viewBinding = true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def appName = "openweather-v${versionMajor}.${versionMinor}.${versionPatch}"
+            def buildType = variant.buildType.name
+            def date = new Date()
+            def formattedDate = date.format('yyyyMMdd')
+            def newName = "${appName}-${buildType}-${formattedDate}.apk"
+            outputFileName = new File(newName)
+        }
     }
 }
 

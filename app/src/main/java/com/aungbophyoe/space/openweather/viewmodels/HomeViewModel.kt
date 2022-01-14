@@ -25,6 +25,9 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
     private val _dailyWeather : MutableLiveData<OpenWeather?> = MutableLiveData()
     val dailyWeather : LiveData<OpenWeather?> get() = _dailyWeather
 
+    private val _noData : MutableLiveData<String?> = MutableLiveData()
+    val noData : LiveData<String?> get() = _noData
+
     private val latitude : MutableLiveData<String> = MutableLiveData("16.8409")
     private val longitude : MutableLiveData<String> = MutableLiveData("96.1735")
     fun setLocation(_latitude:String,_longitude:String){
@@ -40,13 +43,26 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
                     when(dataState){
                         is DataState.Loading -> {
                             _loading.value = true
+                            _currentWeather.value = null
+                            _noData.value = null
+                            Log.d("viewModel","loading")
                         }
                         is DataState.Success -> {
                             _loading.value = false
+                            Log.d("viewModel","success")
                             _currentWeather.value = dataState.data
+                            _noData.value = null
+                        }
+                        is DataState.NoData -> {
+                            _loading.value = false
+                            _currentWeather.value = null
+                            _noData.value = dataState.msg
                         }
                         is DataState.Error -> {
                             _loading.value = false
+                            _currentWeather.value = null
+                            _noData.value = null
+                            Log.d("viewModel","${dataState.exception}")
                         }
                     }
                 }
@@ -62,6 +78,7 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
                     when(dataState){
                         is DataState.Loading -> {
                             _loading.value = true
+                            Log.d("viewModel","loading")
                         }
                         is DataState.Success -> {
                             _loading.value = false
@@ -81,14 +98,25 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository):
                     when(dataState){
                         is DataState.Loading -> {
                             _loading.value = true
+                            _currentWeather.value = null
+                            _noData.value = null
+                            Log.d("viewModel","loading")
                         }
                         is DataState.Success -> {
                             _loading.value = false
                             Log.d("viewModel","success")
                             _currentWeather.value = dataState.data
+                            _noData.value = null
+                        }
+                        is DataState.NoData -> {
+                            _loading.value = false
+                            _currentWeather.value = null
+                            _noData.value = dataState.msg
                         }
                         is DataState.Error -> {
                             _loading.value = false
+                            _currentWeather.value = null
+                            _noData.value = null
                             Log.d("viewModel","${dataState.exception}")
                         }
                     }

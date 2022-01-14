@@ -98,11 +98,32 @@
                 />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:visibility="@{(viewModel.currentWeather!=null || viewModel.loading || viewModel.noData==null) ? View.GONE : View.VISIBLE,default=gone}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNoData"
+                android:text="No data."
+                app:noData="@{viewModel.noData}"
+                android:textSize="@dimen/txt_small"
+                android:textColor="@color/txt_title"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            android:visibility="@{viewModel.currentWeather!=null ? View.VISIBLE : View.GONE,default=visible}"
+            android:visibility="@{(viewModel.currentWeather!=null &amp;&amp; viewModel.noData==null) ? View.VISIBLE : View.GONE,default=gone}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

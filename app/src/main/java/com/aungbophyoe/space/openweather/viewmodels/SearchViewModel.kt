@@ -20,6 +20,8 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
     val loading: LiveData<Boolean> = _loading
     private val _currentWeather : MutableLiveData<CurrentWeather?> = MutableLiveData()
     val currentWeather : LiveData<CurrentWeather?> get() = _currentWeather
+    private val _noData : MutableLiveData<String?> = MutableLiveData()
+    val noData : LiveData<String?> get() = _noData
 
     fun getWeatherByCity(cityName:String){
         viewModelScope.launch {
@@ -29,13 +31,25 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
                     when(dataState){
                         is DataState.Loading -> {
                             _loading.value = true
+                            _noData.value = null
+                            _currentWeather.value = null
+                            Log.d("viewModel","loading")
                         }
                         is DataState.Success -> {
                             _loading.value = false
                             _currentWeather.value = dataState.data
+                            _noData.value = null
+                            Log.d("viewModel","success")
+                        }
+                        is DataState.NoData -> {
+                            _loading.value = false
+                            _currentWeather.value = null
+                            _noData.value = dataState.msg
                         }
                         is DataState.Error -> {
                             _loading.value = false
+                            _noData.value = null
+                            _currentWeather.value = null
                             Log.d("viewModel","${dataState.exception}")
                         }
                     }
