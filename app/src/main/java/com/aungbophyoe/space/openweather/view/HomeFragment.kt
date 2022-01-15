@@ -122,7 +122,6 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.getWeather()
     }
 
     companion object {
